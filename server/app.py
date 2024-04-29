@@ -8,13 +8,6 @@ from models.models import convo
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/api/hello')
-def hello():
-    
-    message='Hello from Flask!'
-    
-    return message
-
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.json
