@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from db.vitalDB import VitalDB, db
+from db.vitalDB import VitalDB
 
 from models.models import convo
 
@@ -12,7 +12,7 @@ CORS(app)
 def login():
     data = request.json
     global google_user_id
-    google_user_id = data.get('googleUserId')
+    google_user_id = str(data.get('googleUserId'))
     
     print(google_user_id)
     
@@ -68,7 +68,7 @@ def formProblems():
 @app.route('/prompt', methods=['POST', 'GET'])
 def prompt():
     
-    prompt = f'i am {age} year old. i am a {gender}. i have allergies from {allergies}. {problems}. how can i improve it? give me prompt in the format, 1st->allergies, 2nd->things related to allergies to avoid that can trigger, 3rd->medicinal supplements that one can have related to it, 4->seeking professional help. make sure prompt is strictly in this format. i want a description regarding them as well, along each point. dont mention description separately, give more information about everything in the same point itself.'
+    prompt = f'I am {age} year old. I am a {gender}. I have allergies from {allergies}. {problems}. how can i improve it? give me prompt in the format, 1st->allergies, 2nd->things related to allergies to avoid that can trigger, 3rd->medicinal supplements that one can have related to it, 4->seeking professional help. make sure prompt is strictly in this format. i want a description regarding them as well, along each point. dont mention description separately, give more information about everything in the same point itself.'
     convo.send_message(prompt)
     
     response = convo.last.text
@@ -78,11 +78,10 @@ def prompt():
     return response
 
 
-@app.route('/dashboard', methods=['GET'])
+@app.route('/dashboard', methods=['POST', 'GET'])
 def get_user_queries():
     
-    collection = db[google_user_id]
-    user_queries = list(collection.find({}, {'_id': 0}))  # Exclude _id field from response
+    user_queries = VitalDB.user_queries(google_user_id)
 
     return jsonify(user_queries), 200
 

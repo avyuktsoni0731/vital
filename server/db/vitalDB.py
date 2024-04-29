@@ -27,3 +27,19 @@ class VitalDB():
         collection = db[emailID]
 
         collection.insert_one({'prompt': prompt, 'response': response})
+
+    
+    def user_queries(emailID):
+        
+        breakString = 'how'
+        
+        all_data = []
+        for emailID in db.list_collection_names():
+            collection = db[emailID]
+            data = []
+            for document in collection.find({}):
+                data.append({"prompt": document["prompt"].partition(breakString)[0], "response": document["response"]})
+            all_data.extend(data)
+            return all_data
+
+        return all_data
