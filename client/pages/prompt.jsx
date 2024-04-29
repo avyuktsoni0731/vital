@@ -37,7 +37,7 @@ const Prompt = () => {
   return (
     <>
       <AuthNavbar />
-      <div>
+      <div className="p-8">
         <p dangerouslySetInnerHTML={{ __html: newText }} className=""></p>
       </div>
     </>

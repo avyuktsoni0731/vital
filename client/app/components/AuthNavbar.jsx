@@ -126,9 +126,8 @@ export default function AuthNavbar() {
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">{userName}</p>
                 </DropdownItem>
-                <DropdownItem key="settings">My Settings</DropdownItem>
-                <DropdownItem key="help_and_feedback">
-                  Help & Feedback
+                <DropdownItem href="/dashboard" key="dashboard">
+                  Dashboard
                 </DropdownItem>
                 <DropdownItem
                   key="logout"
