@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Montserrat } from "next/font/google";
 import "../app/globals.css";
 import AuthNavbar from "@/app/components/AuthNavbar";
-
-const monts = Montserrat({ subsets: ["latin"] });
 
 const Prompt = () => {
   const [text, setText] = useState("");

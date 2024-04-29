@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from db.vitalDB import VitalDB
+from db.vitalDB import VitalDB, db
 
 from models.models import convo
 
@@ -18,7 +18,7 @@ def login():
     
     VitalDB.create_collection(google_user_id)
     
-    return jsonify({'message': 'Login successful', 'googleUserId': google_user_id}), 200
+    return google_user_id
 
 
 @app.route('/form/choosegender', methods=['POST'])
@@ -76,6 +76,15 @@ def prompt():
     VitalDB.store_prompt(google_user_id, prompt, response)
     
     return response
+
+
+@app.route('/dashboard', methods=['GET'])
+def get_user_queries():
+    
+    collection = db[google_user_id]
+    user_queries = list(collection.find({}, {'_id': 0}))  # Exclude _id field from response
+
+    return jsonify(user_queries), 200
 
 if __name__ == "__main__":
   app.run(debug=True)
