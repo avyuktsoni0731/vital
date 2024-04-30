@@ -70,7 +70,7 @@ def formProblems():
 @app.route('/prompt', methods=['POST', 'GET'])
 def prompt():
     
-    prompt = f'I am {age} year old. I am a {gender}. I have allergies from {allergies}. {problems}. how can i improve it? give me prompt in the format, 1st->allergies, 2nd->things related to allergies to avoid that can trigger, 3rd->medicinal supplements that one can have related to it, 4->seeking professional help. make sure prompt is strictly in this format. i want a description regarding them as well, along each point. dont mention description separately, give more information about everything in the same point itself.'
+    prompt = f'I am {age} year old. I am a {gender}. I have allergies from {allergies}. {problems}. how can i improve it? give me responce in the format, 1st->allergies, 2nd->things related to allergies to avoid that can trigger, 3rd->medicinal supplements that one can have related to it, 4->seeking professional help. make sure prompt is strictly in this format. i want a description regarding them as well, along each point. dont mention description separately, give more information about everything in the same point itself.'
     convo.send_message(prompt)
     
     response = convo.last.text
