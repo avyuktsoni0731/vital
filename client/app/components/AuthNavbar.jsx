@@ -110,8 +110,8 @@ export default function AuthNavbar() {
             </Link>
           </NavbarItem> */}
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Integrations
+            <Link color="foreground" href="/chatbot">
+              VitalAI
             </Link>
           </NavbarItem>
         </NavbarContent>
