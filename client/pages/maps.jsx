@@ -53,16 +53,15 @@ export default function Intro() {
   return (
     <APIProvider apiKey={YOUR_GOOGLE_MAPS_API_KEY}>
       <div style={{ height: "100vh", width: "100%" }}>
-        <Map zoom={13} center={position} mapId={process.env.NEXT_PUBLIC_MAP_ID}>
+        <Map zoom={15} center={position} mapId={process.env.NEXT_PUBLIC_MAP_ID}>
           {hospitals.map((hospital) => (
-            <Marker key={hospital.name} position={hospital}>
-              {/* Optionally customize default marker appearance */}
-            </Marker>
+            <Marker key={hospital.name} position={hospital}></Marker>
           ))}
           {open && (
-            <InfoWindow position={position} onCloseClick={() => setOpen(false)}>
-              <p>I'm in Hamburg</p>
-            </InfoWindow>
+            <InfoWindow
+              position={position}
+              onCloseClick={() => setOpen(false)}
+            ></InfoWindow>
           )}
         </Map>
       </div>
