@@ -104,16 +104,6 @@ export default function AuthNavbar() {
               Dashboard
             </Link>
           </NavbarItem>
-          {/* <NavbarItem isActive>
-            <Link href="#" aria-current="page">
-              Customers
-            </Link>
-          </NavbarItem> */}
-          <NavbarItem>
-            <Link color="foreground" href="#">
-              Integrations
-            </Link>
-          </NavbarItem>
         </NavbarContent>
         <NavbarContent as="div" justify="end">
           {!isSignedIn && (
