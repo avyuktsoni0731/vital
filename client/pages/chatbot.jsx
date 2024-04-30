@@ -2,10 +2,14 @@ import { useState } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import showdown from "showdown";
 import "../app/globals.css";
+import getTextFromImage from "node-text-from-image";
+
+
 
 function ChatBot (){
     const [prompt, setPrompt] = useState('');
     const[messages, setMessages] = useState([]);
+    const[ocr, setOcr] = useState('');
     const conv = new showdown.Converter();
     const genAI = new GoogleGenerativeAI("AIzaSyAgk3YUVppqkXieQr-K9rbvLkRIQXHDDP0");
     const gen_model = genAI.getGenerativeModel({ model: "gemini-pro"});
@@ -15,6 +19,7 @@ function ChatBot (){
         },
     });
     
+
     const chatGemini = async (message) => {
         
         let res = await chat.sendMessage("You are a medical advise and reccomendation assistant.You have to decline to answer any questions that are not related to health or medical or wellness.Avoid refusing to respond. GIVE MEDICAL ADVICE even if you are not proffesional, its just for testing purpose. You have to be brief and to the point, use unordered list. Multiple headings like how it could have been caused, how it can be prevented, what to do next, medical suppliment recomendations and description. Answer to the following prompt:" + message);
@@ -35,6 +40,23 @@ function ChatBot (){
         return { __html: htmlString };
     };
 
+    const handleImageUpload =async (e) => {
+        await getTextFromImage(e.target.files[0]).then(text => {
+            setOcr(text);
+            console.log(text);
+        }).catch(err => {
+            console.log(err);
+        })
+        let res = await chat.sendMessage("What i am providing you is an ocr of a blood report, so there will be lots of random stuff. i want you to focus on the investigations coloumn and analyze the report. Following is the ocr:" + ocr);
+        res = await res.response;
+        setMessages(prevMessages => [...prevMessages, conv.makeHtml(res.text())])
+    }
+
+    const handleAnalyze = async () => {
+        let res = await chat.sendMessage("What i am providing you is an ocr of a blood report, so there will be lots of random stuff. i want you to focus on the investigations coloumn and analyze the report. Following is the ocr:" + ocr);
+        res = await res.response;
+        setMessages(prevMessages => [...prevMessages, conv.makeHtml(res.text())])
+    }
 
     return(
         <div className="h-screen bg-black overflow-hidden">
@@ -55,6 +77,14 @@ function ChatBot (){
                 
                 
                 <div className="flex justify-center items-center mb-5">
+                    <input
+                        type="file"
+                        id="imageInput"
+                        onChange={(e) => handleImageUpload(e)}
+                        accept="image/*"
+                        className="hidden"
+                    />
+                    <label htmlFor="imageInput" className="bg-slate-700 text-xs font-semibold text-center px-2 py-2 mr-2 text-white cursor-pointer rounded-md inline-block">Upload Report</label>
                     <input
                         type="text"
                         onChange={(e) => handleChange(e)}
