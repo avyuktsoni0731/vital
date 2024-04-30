@@ -1,12 +1,10 @@
 "use client";
 import React from "react";
 import { User } from "@nextui-org/react";
-import { AcmeLogo } from "./icons/AcmeIcon";
 import Image from "next/image";
 import VitalLogo from "./icons/vital.png";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-// import DarkLightSwitch from "./DarkLightSwitch";
 import {
   Navbar,
   NavbarBrand,
@@ -34,6 +32,16 @@ export default function AuthNavbar() {
   useEffect(() => {
     if (session.status === "unauthenticated") {
       setIsSignedIn(false);
+
+      fetch("http://127.0.0.1:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sessionStatus: session.status,
+        }),
+      });
     }
     if (session.status === "authenticated") {
       setIsSignedIn(true);
@@ -48,7 +56,10 @@ export default function AuthNavbar() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ googleUserId: emailId }),
+        body: JSON.stringify({
+          googleUserId: emailId,
+          sessionStatus: session.status,
+        }),
       });
     }
   }, [session.status]);
@@ -77,8 +88,7 @@ export default function AuthNavbar() {
             className="sm:hidden"
           />
           <NavbarBrand>
-            {/* <AcmeLogo /> */}
-            <Image src={VitalLogo} />
+            <Image src={VitalLogo} alt="vital-logo" />
             <p className="font-bold text-inherit">VITAL</p>
           </NavbarBrand>
         </NavbarContent>
@@ -164,7 +174,6 @@ export default function AuthNavbar() {
           ))}
         </NavbarMenu>
       </Navbar>
-      {/* <DarkLightSwitch /> */}
     </>
   );
 }

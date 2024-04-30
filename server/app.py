@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-from db.vitalDB import VitalDB
+from db.vitalDB import VitalDB, db
 
 from models.models import convo
 
@@ -11,13 +11,15 @@ CORS(app)
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.json
-    global google_user_id
+    global google_user_id, session_status
     google_user_id = str(data.get('googleUserId'))
+    session_status = data.get('sessionStatus')
     
     print(google_user_id)
+    print(session_status)
     
     VitalDB.create_collection(google_user_id)
-    
+
     return google_user_id
 
 
@@ -81,7 +83,15 @@ def prompt():
 @app.route('/dashboard', methods=['POST', 'GET'])
 def get_user_queries():
     
-    user_queries = VitalDB.user_queries(google_user_id)
+    # data = request.json
+    # emailId = data.get('emailID')
+
+    print(f'EMAILID: {google_user_id}')
+    
+    if session_status == 'authenticated':
+        user_queries = VitalDB.user_queries(google_user_id)
+    else:
+        user_queries = []
 
     return jsonify(user_queries), 200
 
