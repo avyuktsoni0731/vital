@@ -16,16 +16,13 @@ function DashboardPage() {
   }, []);
 
   function formattedResponse(response) {
-    // Replace single asterisks with bullet points
     let formattedResponse = response.replace(/\*/g, "•");
 
-    // Wrap text between double asterisks with bold HTML tags
     formattedResponse = formattedResponse.replace(
       /\*\*(.*?)\*\*/g,
       "<b>$1</b>"
     );
 
-    // Replace newline characters with HTML line breaks
     formattedResponse = formattedResponse.replace(/\n/g, "<br>");
     // let formattedResponse = response;
 

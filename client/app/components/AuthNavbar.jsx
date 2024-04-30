@@ -2,6 +2,8 @@
 import React from "react";
 import { User } from "@nextui-org/react";
 import { AcmeLogo } from "./icons/AcmeIcon";
+import Image from "next/image";
+import VitalLogo from "./icons/vital.png";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 // import DarkLightSwitch from "./DarkLightSwitch";
@@ -75,8 +77,9 @@ export default function AuthNavbar() {
             className="sm:hidden"
           />
           <NavbarBrand>
-            <AcmeLogo />
-            <p className="font-bold text-inherit">ACME</p>
+            {/* <AcmeLogo /> */}
+            <Image src={VitalLogo} />
+            <p className="font-bold text-inherit">VITAL</p>
           </NavbarBrand>
         </NavbarContent>
 
