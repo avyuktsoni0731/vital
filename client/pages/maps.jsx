@@ -8,13 +8,13 @@ import {
   InfoWindow,
 } from "@vis.gl/react-google-maps";
 
-const libraries = ["places"]; // Include Places library for location search
+const libraries = ["places"];
 
 export default function Intro() {
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [open, setOpen] = useState(false);
   const [hospitals, setHospitals] = useState([]);
-  const YOUR_GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY; // Replace with your API key
+  const YOUR_GOOGLE_MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
 
   useEffect(() => {
     if (navigator.geolocation) {

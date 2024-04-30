@@ -31,15 +31,14 @@ class VitalDB():
     
     def user_queries(emailID):
         
+        collection = db[emailID]
         breakString = 'how'
         
         all_data = []
-        for emailID in db.list_collection_names():
-            collection = db[emailID]
-            data = []
-            for document in collection.find({}):
-                data.append({"prompt": document["prompt"].partition(breakString)[0], "response": document["response"]})
-            all_data.extend(data)
-            return all_data
+        for document in collection.find({}):
+            prompt = document["prompt"].partition(breakString)[0]
+            response = document["response"]
+            all_data.append({"prompt": prompt, "response": response})
 
         return all_data
+    

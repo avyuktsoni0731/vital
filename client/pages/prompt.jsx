@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { VitalLoader } from "../app/components/icons/VitalLoader";
 import "../app/globals.css";
 import AuthNavbar from "@/app/components/AuthNavbar";
 
 const Prompt = () => {
   const [text, setText] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch("http://127.0.0.1:5000/prompt");
       if (!response.ok) {
@@ -19,13 +22,13 @@ const Prompt = () => {
       setText(data);
     } catch (error) {
       console.error("Error fetching data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  // Sample text output
   let newText = text;
 
-  // Replace text between ** with bold text and add newline before **
   newText = newText.replace(/- (.*?)(?=\s*-|$)/g, "<br><li>$1</li>");
   newText = newText.replace(/\*\*(.*?)\*\*/g, "<b>$1</b>");
   newText = newText.replace(/\* /g, "<br>");
@@ -35,7 +38,15 @@ const Prompt = () => {
     <>
       <AuthNavbar />
       <div className="p-8">
-        <p dangerouslySetInnerHTML={{ __html: newText }} className=""></p>
+        {isLoading ? (
+          <>
+            <div className="flex flex-col items-center justify-center min-h-[80vh]">
+              <VitalLoader />
+            </div>
+          </>
+        ) : (
+          <p dangerouslySetInnerHTML={{ __html: newText }} className=""></p>
+        )}
       </div>
     </>
   );
