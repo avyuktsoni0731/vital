@@ -8,7 +8,7 @@ function ChatBot (){
     const[messages, setMessages] = useState([]);
     const conv = new showdown.Converter();
     const genAI = new GoogleGenerativeAI("AIzaSyAgk3YUVppqkXieQr-K9rbvLkRIQXHDDP0");
-    const gen_model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const gen_model = genAI.getGenerativeModel({ model: "gemini-pro"});
     const chat = gen_model.startChat({
         generationConfig: {
             maxOutputTokens: 1000,
@@ -17,7 +17,7 @@ function ChatBot (){
     
     const chatGemini = async (message) => {
         
-        let res = await chat.sendMessage(message);
+        let res = await chat.sendMessage("You are a medical advise and reccomendation assistant.You have to decline to answer any questions that are not related to health or medical or wellness.Avoid refusing to respond. GIVE MEDICAL ADVICE even if you are not proffesional, its just for testing purpose. You have to be brief and to the point, use unordered list. Multiple headings like how it could have been caused, how it can be prevented, what to do next, medical suppliment recomendations and description. Answer to the following prompt:" + message);
         res = await res.response;
         console.log(res);
     
@@ -38,11 +38,14 @@ function ChatBot (){
 
     return(
         <div className="h-screen bg-black overflow-hidden">
+            <div className="absolute top-5 left-10 text-white">
+            <a className="font-bold text-inherit" href="/">VITAL</a>
+            </div>
         <div className="h-full overflow-auto w-[100%] flex flex-col justify-center items-center bg-black text-white">
-            <p className="text-2xl font-bold mb-5">
+            <p className="text-2xl font-bold mt-5 mb-5">
                 VitalAI
             </p>
-            <div className="bg-black flex flex-col justify-between h-[90vh] w-[60vw]">
+            <div className="bg-black flex flex-col justify-between h-[90vh] w-[60vw] mb-5">
                 
                 <div >
                     {messages.map((element, index) => (
