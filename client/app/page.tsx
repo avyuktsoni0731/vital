@@ -1,10 +1,11 @@
 import AuthNavbar from "./components/AuthNavbar";
-import ChooseGender from "../app/components/ChooseGender";
+import FirstPage from "./components/FirstPage";
 
 export default function Home() {
   return (
     <>
       <AuthNavbar />
+      <FirstPage />
     </>
   );
 }

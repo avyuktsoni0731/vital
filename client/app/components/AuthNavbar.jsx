@@ -90,8 +90,8 @@ export default function AuthNavbar() {
             </Link>
           </NavbarItem>
           <NavbarItem>
-            <Link color="foreground" href="#">
-              Customers
+            <Link color="foreground" href="/dashboard">
+              Dashboard
             </Link>
           </NavbarItem>
           {/* <NavbarItem isActive>
