@@ -94,22 +94,22 @@ export default function AuthNavbar() {
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem>
+          <NavbarItem isActive>
             <Link color="foreground" href="/">
               Home
             </Link>
           </NavbarItem>
-          <NavbarItem>
+          <NavbarItem isActive>
             <Link color="foreground" href="/dashboard">
               Dashboard
             </Link>
           </NavbarItem>
-          {/* <NavbarItem isActive>
-            <Link href="#" aria-current="page">
-              Customers
+          <NavbarItem isActive>
+            <Link color="foreground" href="/maps">
+              Nearby Hospitals
             </Link>
-          </NavbarItem> */}
-          <NavbarItem>
+          </NavbarItem>
+          <NavbarItem isActive>
             <Link color="foreground" href="/chatbot">
               VitalAI
             </Link>
