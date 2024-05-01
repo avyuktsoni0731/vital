@@ -129,7 +129,7 @@ function ChatBot (){
                         src: profilePicture,
                     }}
                 /> */}
-                <img src={profilePicture} className="w-[35px] rounded-full"/>
+                <img src={profilePicture} className="max-w-[35px] max-h-[36px] rounded-full"/>
             </div>
         ) : (
             <div className="flex items-center justify-start gap-5">

@@ -28,11 +28,12 @@ function AgePage() {
       if (!response.ok) {
         throw new Error("Failed to submit age");
       }
-      // Redirect to the gender page
-      router.push(`/form/choosegender`);
+      
     } catch (error) {
       setError(error.message);
     }
+    // Redirect to the gender page
+    router.push(`/form/choosegender`);
   };
 
   return (
