@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { signIn, signOut, useSession } from "next-auth/react";
 import showdown from "showdown";
 import "../app/globals.css";
+import { User } from "@nextui-org/react";
 import getTextFromImage from "node-text-from-image";
 
 
@@ -11,6 +13,50 @@ function ChatBot (){
     const[messages, setMessages] = useState([]);
     const[ocr, setOcr] = useState('');
     const conv = new showdown.Converter();
+
+    const session = useSession();
+
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [profilePicture, setProfilePicture] = useState("");
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    if (session.status === "unauthenticated") {
+      setIsSignedIn(false);
+
+      fetch("http://127.0.0.1:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sessionStatus: session.status,
+        }),
+      });
+    }
+    if (session.status === "authenticated") {
+      setIsSignedIn(true);
+      const profilePicture = session.data.user.image;
+      const userName = session.data.user.name;
+      const emailId = session.data.user.email;
+      setProfilePicture(profilePicture);
+      setUserName(userName);
+
+      fetch("http://127.0.0.1:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          googleUserId: emailId,
+          sessionStatus: session.status,
+        }),
+      });
+    }
+  }, [session.status]);
+
+
     const genAI = new GoogleGenerativeAI("AIzaSyAgk3YUVppqkXieQr-K9rbvLkRIQXHDDP0");
     const gen_model = genAI.getGenerativeModel({ model: "gemini-pro"});
     const chat = gen_model.startChat({
@@ -69,11 +115,30 @@ function ChatBot (){
             </p>
             <div className="bg-black flex flex-col justify-between h-[90vh] w-[60vw] mb-5">
                 
-                <div >
-                    {messages.map((element, index) => (
-                        <div key={index} className={`flex flex-col items-${index % 2 === 0 ? 'end' : 'start'} ${index % 2 === 0 ? 'font-semibold' : 'font-medium'}`} dangerouslySetInnerHTML={createMarkup(element)}></div>
-                    ))}
-                </div>
+            <div>
+    {messages.map((element, index) => (
+        index % 2 === 0  ? (
+            <div className="flex justify-end gap-5">
+                <div key={index} className='flex flex-col items-end font-semibold' dangerouslySetInnerHTML={createMarkup(element)}></div>
+                {/* <User
+                    name={userName}
+                    description="Developer"
+                    avatarProps={{
+                        isBordered: true,
+                        color: "secondary",
+                        src: profilePicture,
+                    }}
+                /> */}
+                <img src={profilePicture} className="w-[35px] rounded-full"/>
+            </div>
+        ) : (
+            <div className="flex items-center justify-start gap-5">
+                <div className="text-white font-bold">VitalAI </div>
+                <div key={index} className='flex flex-col items-start font-medium' dangerouslySetInnerHTML={createMarkup(element)}></div>
+            </div>
+        )
+    ))}
+</div>
                 
                 
                 <div className="flex justify-center items-center mb-5">
