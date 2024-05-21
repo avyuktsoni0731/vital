@@ -23,7 +23,7 @@ function ChatBot() {
     if (session.status === "unauthenticated") {
       setIsSignedIn(false);
 
-      fetch("http://127.0.0.1:5000/api/login", {
+      fetch("https://vitalwebapp.onrender.com//api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ function ChatBot() {
       setProfilePicture(profilePicture);
       setUserName(userName);
 
-      fetch("http://127.0.0.1:5000/api/login", {
+      fetch("https://vitalwebapp.onrender.com//api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -18,13 +18,16 @@ function AgePage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://127.0.0.1:5000/form/age", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ gender, age }),
-      });
+      const response = await fetch(
+        "https://vitalwebapp.onrender.com//form/age",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ gender, age }),
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to submit age");
       }

@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    const response = await fetch("http://127.0.0.1:5000/api/hello");
+    const response = await fetch("https://vitalwebapp.onrender.com/api/hello");
     const data = await response.json();
     res.status(200).json(data);
   } catch (error) {
