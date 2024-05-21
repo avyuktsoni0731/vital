@@ -1,6 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 
+import os
+
 from db.vitalDB import VitalDB, db
 
 from models.models import convo
@@ -96,4 +98,6 @@ def get_user_queries():
     return jsonify(user_queries), 200
 
 if __name__ == "__main__":
-  app.run(debug=True)
+#   app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
