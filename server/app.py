@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 
 import os
@@ -96,6 +96,10 @@ def get_user_queries():
         user_queries = []
 
     return jsonify(user_queries), 200
+
+@app.route("/testpage")
+def index():
+    return render_template("index.html")
 
 if __name__ == "__main__":
 #   app.run(debug=True)
