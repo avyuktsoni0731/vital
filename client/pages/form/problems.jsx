@@ -17,7 +17,7 @@ function ProblemsPage() {
     event.preventDefault();
     try {
       const response = await fetch(
-        "https://vitalwebapp.onrender.com//form/problems",
+        "https://vitalwebapp.onrender.com/form/problems",
         {
           method: "POST",
           headers: {

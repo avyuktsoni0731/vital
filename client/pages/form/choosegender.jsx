@@ -15,7 +15,7 @@ function App() {
     router.push(`/form/allergies`);
     try {
       const response = await axios.post(
-        "https://vitalwebapp.onrender.com//form/choosegender",
+        "https://vitalwebapp.onrender.com/form/choosegender",
         { gender }
       );
       console.log(response.data);

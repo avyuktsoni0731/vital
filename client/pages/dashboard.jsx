@@ -22,7 +22,7 @@ function DashboardPage() {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `https://vitalwebapp.onrender.com//dashboard`
+        `https://vitalwebapp.onrender.com/dashboard`
       );
       const data = await response.json();
       setPromptsAndResponses(data);

@@ -17,7 +17,7 @@ function AllergiesPage() {
     event.preventDefault();
     try {
       const response = await fetch(
-        "https://vitalwebapp.onrender.com//form/allergies",
+        "https://vitalwebapp.onrender.com/form/allergies",
         {
           method: "POST",
           headers: {

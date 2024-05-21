@@ -19,7 +19,7 @@ function AgePage() {
     event.preventDefault();
     try {
       const response = await fetch(
-        "https://vitalwebapp.onrender.com//form/age",
+        "https://vitalwebapp.onrender.com/form/age",
         {
           method: "POST",
           headers: {

@@ -23,7 +23,7 @@ function ChatBot() {
     if (session.status === "unauthenticated") {
       setIsSignedIn(false);
 
-      fetch("https://vitalwebapp.onrender.com//api/login", {
+      fetch("https://vitalwebapp.onrender.com/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -41,7 +41,7 @@ function ChatBot() {
       setProfilePicture(profilePicture);
       setUserName(userName);
 
-      fetch("https://vitalwebapp.onrender.com//api/login", {
+      fetch("https://vitalwebapp.onrender.com/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -54,9 +54,7 @@ function ChatBot() {
     }
   }, [session.status]);
 
-  const genAI = new GoogleGenerativeAI(
-    "AIzaSyAgk3YUVppqkXieQr-K9rbvLkRIQXHDDP0"
-  );
+  const genAI = new GoogleGenerativeAI("<API_KEY");
   const gen_model = genAI.getGenerativeModel({ model: "gemini-pro" });
   const chat = gen_model.startChat({
     generationConfig: {
