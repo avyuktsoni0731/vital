@@ -25,7 +25,7 @@ def login():
     return google_user_id
 
 
-@app.route('/form/choosegender', methods=['POST'])
+@app.route('/form/choosegender', methods=['POST', 'GET'])
 def formGender():
     data = request.json
     global gender
@@ -36,7 +36,7 @@ def formGender():
     return gender
     
 
-@app.route('/form/allergies', methods=['POST'])
+@app.route('/form/allergies', methods=['POST', 'GET'])
 def formAllergies():
     data = request.json
     global allergies
@@ -47,7 +47,7 @@ def formAllergies():
     return allergies
 
 
-@app.route('/form/age', methods=['POST'])
+@app.route('/form/age', methods=['POST', 'GET'])
 def formAge():
     data = request.json
     global age
@@ -58,7 +58,7 @@ def formAge():
     return age
 
 
-@app.route('/form/problems', methods=['POST'])
+@app.route('/form/problems', methods=['POST', 'GET'])
 def formProblems():
     data = request.json
     global problems
