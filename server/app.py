@@ -3,7 +3,7 @@ from flask_cors import CORS
 
 import os
 
-from db.vitalDB import VitalDB, db
+from db.vitalDB import VitalDB
 
 from models.models import convo
 
