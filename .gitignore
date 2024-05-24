@@ -136,3 +136,6 @@ server/__pycache__
 server/db/__pycache__
 server/.env
 server/models/__pycache__
+
+# static
+.DS_STORE
