@@ -1,5 +1,7 @@
 # Vital Web App
 
+![Landing](https://github.com/avyuktsoni0731/vitalWebApp/blob/main/static/Landing.png)
+
 ## Table of Contents
 
 - [Overview](#overview)
@@ -24,6 +26,12 @@ The Vital Web App is a full-stack application designed to help users manage thei
 - Google Maps integration to display nearby hospitals
 - Responsive design using Tailwind CSS
 
+### Response
+![Prompt](https://github.com/avyuktsoni0731/vitalWebApp/blob/main/static/Prompt.png)
+
+### Dashboard
+![Dashboard](https://github.com/avyuktsoni0731/vitalWebApp/blob/main/static/Dashboard.png)
+
 ## Technologies Used
 
 - **Frontend**: React, Next.js, Tailwind CSS
@@ -33,6 +41,12 @@ The Vital Web App is a full-stack application designed to help users manage thei
 - **Hosting**: Render (Backend), Vercel (Frontend)
 - **Response Generation & AI Chatbot**: Google Gemini API
 - **Maps**: Google Maps API
+
+## Nearby Hospitals
+![Nearby](https://github.com/avyuktsoni0731/vitalWebApp/blob/main/static/Nearby.png)
+
+### MongoDB to store past queries and responses
+![MongoDB](https://github.com/avyuktsoni0731/vitalWebApp/blob/main/static/MongoDB.png)
 
 ## Setup and Installation
 
