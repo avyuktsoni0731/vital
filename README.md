@@ -66,17 +66,17 @@ The Vital Web App is a full-stack application designed to help users manage thei
    cd vital-web-app
    ```
 2. **Setup the frontend**:
-```bash
-cd client
-npm install
-```
+   ```bash
+   cd client
+   npm install
+   ```
 3. **Setup the backend**:
-```bash
-cd ../server
-python -m venv venv
-source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-pip install -r requirements.txt
-```
+   ```bash
+   cd ../server
+   python -m venv venv
+   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   pip install -r requirements.txt
+   ```
 4. **Environment Variables**:
 - Create a `.env` file in the `server` directory and add your MongoDB connection string (as `MONGODB_URI`) and Google API Key (as `GOOGLE_API_KEY`) for Gemini usage.
 - Create a `.env` file in the `client` directory and add your NextAuth Keys (for Google Auth as `GOOGLE_CLIENT_SECRET` and `GOOGLE_CLIENT_ID`) and Google API Key (as `GOOGLE_API_KEY`) for Google Maps API and AI Chatbot.
