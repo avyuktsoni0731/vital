@@ -119,7 +119,7 @@ The Vital Web App is a full-stack application designed to help users manage thei
 ### Setting Up Google Gemini API Using Google AI Studio
 1. Go to Google AI Studio https://ai.google.dev
 2. Go to Gemini API and click on **Get API key in Google AI Studio**.
-3. Click on the **Get API key** and then click on **Create API key**
+3. Click on the **Get API key** and then click on **Create API key**.
 4. Create a new project or select an existing one.
 5. After selecting the project, select **Create API key in existing project**.
 6. Note down the API key.
