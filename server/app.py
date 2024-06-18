@@ -97,15 +97,6 @@ def get_user_queries():
 
     return jsonify(user_queries), 200
 
-@app.route('/api/clear', methods=['DELETE'])
-def clear():
-    if session_status == 'authenticated':
-        VitalDB.delete_collection(google_user_id)
-        return jsonify({'message': 'Account and all related data deleted successfully'}), 200
-    else:
-        return jsonify({'error': 'User not authenticated'}), 401
-
-
 @app.route("/testpage")
 def index():
     return render_template("index.html")
