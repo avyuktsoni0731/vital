@@ -35,15 +35,15 @@ export default function AuthNavbar() {
     if (session.status === "unauthenticated") {
       setIsSignedIn(false);
 
-      // fetch("http://127.0.0.1:5000/api/login", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     sessionStatus: session.status,
-      //   }),
-      // });
+      fetch("http://127.0.0.1:5000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          sessionStatus: session.status,
+        }),
+      });
     }
     if (session.status === "authenticated") {
       setIsSignedIn(true);
