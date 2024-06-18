@@ -12,7 +12,7 @@ export default function Home() {
           Examine the
         </h1>
         <h1 className="md:text-[6vw] sm:text-[8vw] text-[9vw] font-space font-bold leading-[1] tracking-widest">
-          Potential of Vital's
+          Potential of Vital&apos;s
         </h1>
         <h1 className="md:text-[6vw] sm:text-[8vw] text-[9vw] font-space font-bold leading-[1] tracking-widest gradient-text">
           AI Chatbot
