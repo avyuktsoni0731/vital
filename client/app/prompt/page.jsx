@@ -1,7 +1,7 @@
+'use client'
 import React, { useState, useEffect } from "react";
-import { VitalLoader } from "../app/components/icons/VitalLoader";
-import "../app/globals.css";
-import AuthNavbar from "@/app/components/AuthNavbar";
+import { VitalLoader } from "../../app/components/icons/VitalLoader";
+// import AuthNavbar from "@/app/components/AuthNavbar";
 
 const Prompt = () => {
   const [text, setText] = useState("");
@@ -36,7 +36,7 @@ const Prompt = () => {
 
   return (
     <>
-      <AuthNavbar />
+      {/* <AuthNavbar /> */}
       <div className="p-8">
         {isLoading ? (
           <>

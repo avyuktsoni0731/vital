@@ -1,4 +1,4 @@
-import { Montserrat } from "next/font/google";
+import { Montserrat, Space_Grotesk } from "next/font/google";
 
 export const monts = Montserrat({
   subsets: ["latin"],

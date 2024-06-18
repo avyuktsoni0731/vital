@@ -21,6 +21,8 @@ import {
   Button,
 } from "@nextui-org/react";
 
+
+
 export default function AuthNavbar() {
   const session = useSession();
 
@@ -81,37 +83,37 @@ export default function AuthNavbar() {
 
   return (
     <>
-      <Navbar onMenuOpenChange={setIsMenuOpen}>
+      <Navbar onMenuOpenChange={setIsMenuOpen} className="bg-black text-white">
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             className="sm:hidden"
           />
           <NavbarBrand>
-            <Image src={VitalLogo} alt="vital-logo" />
-            <p className="font-bold text-inherit">VITAL</p>
+            <Image src={VitalLogo} alt="vital-logo"/>
+            <p className="font-bold text-inherit text-xl">VITAL</p>
           </NavbarBrand>
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <NavbarItem isActive>
-            <Link color="foreground" href="/">
+            <Link color="foreground" href="/" className="font-normal text-sm text-white">
               Home
             </Link>
           </NavbarItem>
           <NavbarItem isActive>
-            <Link color="foreground" href="/dashboard">
+            <Link color="foreground" href="/dashboard" className="font-normal text-sm text-white">
               Dashboard
             </Link>
           </NavbarItem>
           <NavbarItem isActive>
-            <Link color="foreground" href="/maps">
+            <Link color="foreground" href="/maps" className="font-normal text-sm text-white">
               Nearby Hospitals
             </Link>
           </NavbarItem>
           <NavbarItem isActive>
-            <Link color="foreground" href="/chatbot">
-              VitalAI
+            <Link color="foreground" href="/chatbot" className="font-semibold font-space text-sm bg-custom-gradient text-black px-4 py-2 rounded-md">
+              Try VitalAI
             </Link>
           </NavbarItem>
         </NavbarContent>

@@ -1,8 +1,7 @@
+'use client'
 import React, { useState, useEffect } from "react";
-import "../app/globals.css";
-import AuthNavbar from "../app/components/AuthNavbar";
 import { useSession } from "next-auth/react";
-import { VitalLoader } from "../app/components/icons/VitalLoader";
+import { VitalLoader } from "../components/icons/VitalLoader";
 
 function DashboardPage() {
   const session = useSession();
@@ -45,17 +44,17 @@ function DashboardPage() {
 
   return (
     <>
-      <AuthNavbar />
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-4xl mb-8">Dashboard</h1>
+      {/* <AuthNavbar /> */}
+      <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
+        <h1 className="text-4xl mb-8 font-space">Dashboard</h1>
         {!isSignedIn && <VitalLoader />}
-        <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-4 mx-10">
           {promptsAndResponses.map((item, index) => (
-            <div key={index} className="bg-gray-100 p-4 rounded-lg shadow-md">
+            <div key={index} className="p-4 rounded-lg shadow-md bg-gray-900">
               <h2 className="text-lg font-semibold mb-2">
                 Prompt: {item.prompt}
               </h2>
-              <p className="text-gray-600">
+              <p className="text-gray-400 px-4">
                 Response: {formattedResponse(item.response)}
               </p>
             </div>

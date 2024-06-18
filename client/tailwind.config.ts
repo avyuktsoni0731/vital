@@ -8,15 +8,18 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
-  fontFamily: {
-    montserrat: ["Montserrat"],
-  },
+  
   theme: {
     extend: {
+      fontFamily: {
+        montserrat: ["Montserrat"],
+        space: ['var(--font-space-grotesk)'],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        'custom-gradient': 'linear-gradient(to right, #fa76a1, #f176db)',
       },
     },
   },
