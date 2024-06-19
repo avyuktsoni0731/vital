@@ -74,11 +74,10 @@ export default function AuthNavbar() {
   };
 
   const menuItems = [
-    "Profile",
-    "Dashboard",
-    "My Settings",
-    "Help & Feedback",
-    "Log Out",
+    {name: "Home", href: '/'},
+    {name: "Dashboard", href: '/dashboard'},
+    {name: "Nearby Hospitals", href: '/maps'},
+    {name: "Try VitalAI", href: '/chatbot'},
   ];
 
   return (
@@ -157,20 +156,24 @@ export default function AuthNavbar() {
         </NavbarContent>
         <NavbarMenu>
           {menuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              {item === "Log Out" ? (
-                <Link color="danger" href="#" size="lg" onClick={logout}>
-                  {item}
-                </Link>
-              ) : (
+            <NavbarMenuItem key={`${item.name}-${index}`}>
+              {item.name === "Try VitalAI" ?(
                 <Link
-                  color={index === 2 ? "primary" : "foreground"}
-                  className="w-full"
-                  href="#"
-                  size="lg"
-                >
-                  {item}
-                </Link>
+                color="foreground"
+                className="font-semibold font-space text-md bg-custom-gradient text-black px-4 py-2 rounded-md"
+                href={item.href}
+              >
+                {item.name}
+              </Link>
+              ) : (
+              <Link
+                color="foreground"
+                className="w-full"
+                href={item.href}
+                size="lg"
+              >
+                {item.name}
+              </Link>
               )}
             </NavbarMenuItem>
           ))}
