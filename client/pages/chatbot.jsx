@@ -1,10 +1,13 @@
-import { useState, useEffect } from "react";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useState } from "react";
 import showdown from "showdown";
 import "../app/globals.css";
-import { Image, User } from "@nextui-org/react";
+import {  User } from "@nextui-org/react";
+import Logo from '../app/components/icons/pulse-white.png';
 import getTextFromImage from "node-text-from-image";
+import ChatNav from "../app/components/ChatNav";
+import { useAuth } from "../app/utils/useAuth";
+import Image from 'next/image';
+
 
 function ChatBot() {
   const [prompt, setPrompt] = useState("");
@@ -12,47 +15,17 @@ function ChatBot() {
   const [ocr, setOcr] = useState("");
   const conv = new showdown.Converter();
 
-  const session = useSession();
 
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [profilePicture, setProfilePicture] = useState("");
-  const [userName, setUserName] = useState("");
+  const {
+    isSignedIn,
+    profilePicture,
+    userName,
+    login,
+    logout
+  } = useAuth();
+
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    if (session.status === "unauthenticated") {
-      setIsSignedIn(false);
-
-      fetch("https://vitalwebapp.onrender.com/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          sessionStatus: session.status,
-        }),
-      });
-    }
-    if (session.status === "authenticated") {
-      setIsSignedIn(true);
-      const profilePicture = session.data.user.image;
-      const userName = session.data.user.name;
-      const emailId = session.data.user.email;
-      setProfilePicture(profilePicture);
-      setUserName(userName);
-
-      fetch("https://vitalwebapp.onrender.com/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          googleUserId: emailId,
-          sessionStatus: session.status,
-        }),
-      });
-    }
-  }, [session.status]);
+  
 
   const chat = async () => {
     setLoading(true);
@@ -62,7 +35,7 @@ function ChatBot() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ message: {prompt} })
+        body: JSON.stringify({ message: prompt })
       });
 
       if (!res.ok) {
@@ -77,6 +50,8 @@ function ChatBot() {
       setLoading(false);
     }
   };
+
+  
 
   const ocrAnalyze = async (ocrText) => {
     setLoading(true);
@@ -110,7 +85,7 @@ function ChatBot() {
 
     setMessages((prevMessages) => [...prevMessages, prompt]);
     chat();
-    // chatGemini(prompt);
+    
   };
 
   const createMarkup = (htmlString) => {
@@ -127,34 +102,28 @@ function ChatBot() {
     } catch (err) {
       console.log(err);
     }
-    // let res = await chat.sendMessage(
-    //   "What i am providing you is an ocr of a blood report, so there will be lots of random stuff. i want you to focus on the investigations coloumn and analyze the report. Following is the ocr:" +
-    //     ocr
-    // );
-    // res = await res.response;
-    // setMessages((prevMessages) => [...prevMessages, conv.makeHtml(res.text())]);
+    
   };
 
   return (
-    <div className="h-screen bg-black overflow-hidden">
-      {/* <div className="absolute top-5 left-10 text-white">
-        <a className="font-bold text-inherit" href="/">
-          VITAL
-        </a>
-      </div> */}
-      <div className="h-full overflow-auto w-[100%] flex flex-col justify-center items-center text-white ">
+  <>
+    <ChatNav />
+    
+      <div className="h-[90vh] bg-black w-[100%] flex flex-col justify-center items-center text-white ">
         <div id="customScrollBar" className=" flex flex-col justify-between h-[80vh] w-[100%] mb-5 rounded-md px-[20vw] overflow-y-scroll">
           <div>
             {messages.map((element, index) =>
               index % 2 === 0 ? (
                 <div key={index} className="flex justify-end items-center gap-5">
-                  <span className="font-semibold align-center text-center">
+                  <span className="">
                     {element}
                   </span>
                   <Image
                     src={profilePicture}
                     className="max-w-[35px] rounded-full max-h-[35px] m-4"
                     alt="user-profile-image"
+                    width={35}
+                    height={35}
                   />
                 </div>
               ) : (
@@ -162,9 +131,10 @@ function ChatBot() {
                   key={index}
                   className="flex items-start justify-start gap-5"
                 >
-                  <span className="text-white font-bold">
+                  {/* <span className="text-white font-bold">
                     VitalAI 
-                  </span>
+                  </span> */}
+                  <Image src={Logo} alt="vital-logo" width={35} height={35}/>
                   <div
                     className="flex flex-col items-start"
                     dangerouslySetInnerHTML={createMarkup(element)}
@@ -174,7 +144,7 @@ function ChatBot() {
             )}
           </div>
         </div>
-        <div className="flex justify-center items-center bg-[#212020] px-4 py-3 rounded-full w-[50vw]">
+        <div className="flex justify-center items-center bg-[#212020] px-4 py-3 mb-5 rounded-full w-[80vw] lg:w-[70vw]">
             <input
               type="file"
               id="imageInput"
@@ -187,11 +157,11 @@ function ChatBot() {
               htmlFor="imageInput"
               className=" text-xs font-semibold text-center pr-4  text-white cursor-pointer rounded-md  inline-flex items-center "
             >
-              <span>Upload Report</span>
+              <span className="sm:inline hidden pr-4">Upload <br></br>Report</span>
               <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
                 <path fill="currentColor" d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"/>
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"/>
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2" d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" strokeWidth="2" d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z"/>
               </svg>
             </label>
             <input
@@ -219,7 +189,7 @@ function ChatBot() {
             </button>
           </div>
       </div>
-    </div>
+    </>
   );
 }
 

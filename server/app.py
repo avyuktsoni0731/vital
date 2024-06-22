@@ -77,7 +77,7 @@ def prompt():
     
     response = convo.last.text
     
-    # VitalDB.store_prompt(google_user_id, prompt, response)
+    VitalDB.store_prompt(google_user_id, prompt, response)
     
     return response
 
