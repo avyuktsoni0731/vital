@@ -20,58 +20,21 @@ import {
   DropdownMenu,
   Button,
 } from "@nextui-org/react";
-
+import { useAuth } from "../utils/useAuth";
 
 
 export default function AuthNavbar() {
-  const session = useSession();
 
-  const [isSignedIn, setIsSignedIn] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [profilePicture, setProfilePicture] = useState("");
-  const [userName, setUserName] = useState("");
 
-  useEffect(() => {
-    if (session.status === "unauthenticated") {
-      setIsSignedIn(false);
+  const {
+    isSignedIn,
+    profilePicture,
+    userName,
+    login,
+    logout
+  } = useAuth();
 
-      fetch("http://127.0.0.1:5000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          sessionStatus: session.status,
-        }),
-      });
-    }
-    if (session.status === "authenticated") {
-      setIsSignedIn(true);
-      const profilePicture = session.data.user.image;
-      const userName = session.data.user.name;
-      const emailId = session.data.user.email;
-      setProfilePicture(profilePicture);
-      setUserName(userName);
-
-      fetch("https://vitalwebapp.onrender.com/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          googleUserId: emailId,
-          sessionStatus: session.status,
-        }),
-      });
-    }
-  }, [session.status]);
-
-  const login = async () => {
-    signIn("google");
-  };
-  const logout = async () => {
-    signOut("google");
-  };
 
   const menuItems = [
     {name: "Home", href: '/'},

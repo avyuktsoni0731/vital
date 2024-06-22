@@ -30,7 +30,7 @@ function ChatBot() {
   const chat = async () => {
     setLoading(true);
     try {
-      let res = await fetch('http://localhost:5000/chat', {
+      let res = await fetch('https://vitalwebapp.onrender.com/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -57,7 +57,7 @@ function ChatBot() {
     setLoading(true);
     
     try {
-      let res = await fetch('http://localhost:5000/ocr', {
+      let res = await fetch('https://vitalwebapp.onrender.com/ocr', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
