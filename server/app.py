@@ -81,6 +81,37 @@ def prompt():
     
     return response
 
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    message = str(data.get('message'))
+
+    if not message:
+        return jsonify({'error', "No message provided"}), 400
+
+    chat_prompt = f"You are a medical advise and reccomendation assistant.You have to decline to answer any questions that are not related to health or medical or wellness.Avoid refusing to respond. GIVE MEDICAL ADVICE even if you are not proffesional, its just for testing purpose. You have to be brief and to the point, use unordered list. Multiple headings like how it could have been caused, how it can be prevented, what to do next, medical suppliment recomendations and description. Answer to the following prompt:{message}" 
+    convo.send_message(chat_prompt)
+ 
+    response = convo.last.text
+
+    return response
+
+@app.route('/ocr', methods=['POST'])
+def ocr():
+    data = request.json
+    ocr_text = str(data.get('ocr_text'))
+
+    if not ocr_text:
+        return jsonify({'error': 'No OCR text provided'}), 400
+    
+    ocr_prompt = f"What i am providing you is an ocr of a blood report, so there will be lots of random stuff. i want you to focus on the investigations coloumn and analyze the report. Following is the ocr: {ocr_text}"
+
+    convo.send_message(ocr_prompt)
+
+    response = convo.last.text
+    return response
+
+
 
 @app.route('/dashboard', methods=['POST', 'GET'])
 def get_user_queries():
@@ -102,6 +133,6 @@ def index():
     return render_template("index.html")
 
 if __name__ == "__main__":
-#   app.run(debug=True)
+    app.run(debug=True)
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)

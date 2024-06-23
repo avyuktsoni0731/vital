@@ -1,6 +1,10 @@
-import { Montserrat, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk } from "next/font/google";
 
-export const monts = Montserrat({
-  subsets: ["latin"],
-  display: "swap",
+export const inter = Inter({ subsets: ["latin"] });
+
+export const space_grotesk = Space_Grotesk({
+  weight: ['400', '500', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-space-grotesk'
 });
