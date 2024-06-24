@@ -1,28 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import showdown from "showdown";
 import "../app/globals.css";
-import {  User } from "@nextui-org/react";
-import Logo from '../app/components/icons/pulse-white.png';
 import getTextFromImage from "node-text-from-image";
 import ChatNav from "../app/components/ChatNav";
-import { useAuth } from "../app/utils/useAuth";
-import Image from 'next/image';
-
+import { VitalLoader } from "../app/components/icons/VitalLoader";
+import Chat from "../app/components/Chat";
 
 function ChatBot() {
   const [prompt, setPrompt] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [ocr, setOcr] = useState("");
   const conv = new showdown.Converter();
+  const [chats, setChats] = useState([]);
 
-
-  const {
-    isSignedIn,
-    profilePicture,
-    userName,
-    login,
-    logout
-  } = useAuth();
 
   const [loading, setLoading] = useState(false);
   
@@ -43,7 +31,11 @@ function ChatBot() {
       }
 
       let data = await res.text();
-      setMessages((prevMessages) => [...prevMessages, conv.makeHtml(data)]);
+      setChats((prevChats) => [
+        ...prevChats,
+        <Chat key={prevChats.length + 1} isUser={false} message={conv.makeHtml(data)} loading={false} />
+      ]);
+
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -70,7 +62,10 @@ function ChatBot() {
       }
 
       let data = await res.text();
-      setMessages((prevMessages) => [...prevMessages, conv.makeHtml(data)]);
+      setChats((prevChats) => [
+        ...prevChats,
+        <Chat key={prevChats.length + 1} isUser={false} message={conv.makeHtml(data)} loading={false} />
+      ]);
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -81,22 +76,26 @@ function ChatBot() {
   const handleChange = (e) => {
     setPrompt(e.target.value);
   };
-  const handleSubmit = () => {
 
-    setMessages((prevMessages) => [...prevMessages, prompt]);
-    chat();
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit();
+    }
+  };
+
+  const handleSubmit = () => {
+    if (prompt.trim() !== '') {
+      setChats([...chats, <Chat key={chats.length} isUser={true} userPrompt={prompt} />]);
+      chat(); 
+      setPrompt(''); 
+    }
     
   };
 
-  const createMarkup = (htmlString) => {
-    return { __html: htmlString };
-  };
-
   const handleImageUpload = async (e) => {
-    setMessages((prevMessages) => [...prevMessages, "Analyzing the report"]);
+    setChats([...chats, <Chat key={chats.length} isUser={true} userPrompt={'File Uploaded...'} />]);
     try {
       const text = await getTextFromImage(e.target.files[0]);
-      setOcr(text);
       console.log('OCR Text:', text);
       await ocrAnalyze(text); 
     } catch (err) {
@@ -109,39 +108,11 @@ function ChatBot() {
   <>
     <ChatNav />
     
-      <div className="h-[90vh] bg-black w-[100%] flex flex-col justify-center items-center text-white ">
-        <div id="customScrollBar" className=" flex flex-col justify-between h-[80vh] w-[100%] mb-5 rounded-md px-[20vw] overflow-y-scroll">
+      <div className="h-[90vh] bg-black w-[100%] flex flex-col justify-center items-center text-white overflow-auto">
+        <div id="customScrollBar" className=" flex flex-col justify-between h-[80vh] w-[100%] text-sm sm:text-md mb-5 rounded-md px-2 sm:px-[20vw] overflow-auto overflow-y-scroll">
           <div>
-            {messages.map((element, index) =>
-              index % 2 === 0 ? (
-                <div key={index} className="flex justify-end items-center gap-5">
-                  <span className="">
-                    {element}
-                  </span>
-                  <Image
-                    src={profilePicture}
-                    className="max-w-[35px] rounded-full max-h-[35px] m-4"
-                    alt="user-profile-image"
-                    width={35}
-                    height={35}
-                  />
-                </div>
-              ) : (
-                <div
-                  key={index}
-                  className="flex items-start justify-start gap-5"
-                >
-                  {/* <span className="text-white font-bold">
-                    VitalAI 
-                  </span> */}
-                  <Image src={Logo} alt="vital-logo" width={35} height={35}/>
-                  <div
-                    className="flex flex-col items-start"
-                    dangerouslySetInnerHTML={createMarkup(element)}
-                  ></div>
-                </div>
-              )
-            )}
+            {chats}
+            {loading && <VitalLoader />}
           </div>
         </div>
         <div className="flex justify-center items-center bg-[#212020] px-4 py-3 mb-5 rounded-full w-[80vw] lg:w-[70vw]">
@@ -166,11 +137,13 @@ function ChatBot() {
             </label>
             <input
               type="text"
+              value={prompt}
               onChange={(e) => handleChange(e)}
+              onKeyDown={handleKeyDown}
               placeholder="Chat..."
               name="chat"
               id="chat"
-              className="bg-[#212020] w-[80%]  focus:outline-none"
+              className="bg-[#212020] w-[80%] focus:outline-none"
             />
             <button
               id="btn"
